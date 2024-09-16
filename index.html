@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bufete de Abogados</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Merriweather', serif;
+            margin: 0;
+            padding: 0;
+            color: #dddddd;
+            overflow-x: hidden;
+            opacity: 0; /* Inicialmente invisible */
+            animation: fadeIn 1.5s ease-in-out forwards; /* Animación al cargar la página */
+            position: relative;
+            padding-bottom: 50px; /* Espacio para el footer eliminado */
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('fondoabogado.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in-out forwards;
+            filter: blur(8px);
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(30, 30, 30, 0.2);
+            padding: 10px 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: none; /* Sin sombra */
+        }
+
+        nav.scrolled {
+            background-color: rgba(30, 30, 30, 0.9);
+        }
+
+        nav .logo {
+            font-size: 1.5em;
+            color: #ffffff;
+        }
+
+        nav .menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-grow: 1; /* Ocupa el espacio restante */
+            justify-content: center; /* Centra los elementos horizontalmente */
+        }
+
+        nav .menu a {
+            color: #cccccc;
+            padding: 10px 15px;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        nav .menu a:hover {
+            color: #6f4f28; /* Color marrón al pasar el mouse */
+        }
+
+        nav .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        nav .menu-toggle span {
+            height: 2px;
+            width: 25px;
+            background: #ffffff;
+            margin: 4px 0;
+            transition: all 0.3s;
+        }
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #ffffff;
+            z-index: 1;
+            position: relative;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .hero-text h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .hero-text p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: 10px auto;
+        }
+
+        .hero-text .btn {
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .hero-text .btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            color: #ffffff;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-in-out forwards;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-box:hover {
+            transform: scale(1.05); /* Aumenta el tamaño ligeramente */
+            border-color: #6f4f28; /* Color de borde marrón al pasar el mouse */
+        }
+
+        .service-box h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .service-box p {
+            margin: 10px 0;
+        }
+
+        .service-box .price {
+            font-weight: normal;
+        }
+
+        @media (max-width: 768px) {
+            nav .menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background-color: rgba(30, 30, 30, 0.95);
+                position: absolute;
+                top: 50px;
+                left: 0;
+                padding: 20px;
+                gap: 20px;
+                align-items: center;
+            }
+            nav .menu a {
+                padding: 15px 20px;
+                font-size: 1.2em;
+            }
+            nav .menu-toggle {
+                display: flex;
+            }
+            nav.active .menu {
+                display: flex;
+            }
+        }
+        /* Estilos para el aviso de copyright minimalista */
+        .copyright {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 0.8em;
+            border-top: 1px solid #dddddd;
+        }
+
+        .copyright a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: normal;
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="background-overlay"></div>
+    <nav id="navbar">
+        <div class="logo">Bufete</div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu">
+            <a href="#">HOME</a>
+            <a href="#">SERVICIOS</a>
+            <a href="contacto.html">CONTACTO</a>
+        </div>
+    </nav>
+
+    <div class="hero-text">
+        <h1>30 Años de Experiencia Brindando Asesoramiento Jurídico de Excelencia</h1>
+        <p>En nuestro estudio jurídico ofrecemos estrategias y soluciones legales a empresas y particulares, ajustándonos a los mejores estándares del derecho y adecuándonos a los constantes cambios en el contexto jurídico y económico y al dinamismo tecnológico en que vivimos.</p>
+        <button class="btn">Conócenos</button>
+    </div>
+
+    <section class="services">
+        <div class="service-box">
+            <h3>ASESORAMIENTO PENAL</h3>
+            <p>Con amplia experiencia en derecho penal, ofrezco un servicio legal enfocado en defender tus derechos y brindarte el respaldo necesario en cada etapa del proceso penal. Agendá una consulta conmigo para discutir tu situación y recibir el asesoramiento que necesitas en derecho penal.</p>
+            <p class="price">Consulta $60.000</p>
+        </div>
+        <div class="service-box">
+            <h3>ASESORAMIENTO GRATUITO JUBILACIONES</h3>
+            <p>¿Tienes dudas sobre tu jubilación o pensión? Como abogado especializado, ofrezco asesoramiento completamente gratuito para que puedas entender tus derechos y gestionar los trámites necesarios de manera eficiente. Agendá tu consulta gratuita conmigo y recibe el apoyo legal para tu jubilación.</p>
+        </div>
+        <div class="service-box">
+            <h3>ASESORAMIENTO SUCESIONES</h3>
+            <p>Con experiencia en derecho sucesorio, te ofrezco el acompañamiento y asesoramiento legal necesario para gestionar procesos de herencias y sucesiones de manera eficiente. Agenda una consulta conmigo y recibe el apoyo legal que necesitas para resolver cualquier cuestión sucesoria.</p>
+            <p class="price">Consulta $30.000</p>
+        </div>
+        <div class="service-box">
+            <h3>ASESORAMIENTO VERAZ</h3>
+            <p>Si tienes problemas con tu historial crediticio en bases de datos como Veraz, Nosis o BCRA, te ofrezco mi experiencia en la desafectación de deudas. Agenda una consulta conmigo y recibe el asesoramiento legal para eliminar tus deudas de estas bases de datos.</p>
+            <p class="price">Consulta $20.000</p>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2024 Bufete de Abogados | <a href="https://www.linkedin.com/in/lionel-rojas-55a12827a/?trk=opento_sprofile_topcard" target="_blank">Lionel Rojas</a></p>
+    </div>
+    </section>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('nav').classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', function() {
+            var nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
